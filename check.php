@@ -20,12 +20,12 @@ session_start();
             $_SESSION['user_name'] = $user['username'];
 
         // ホーム画面にリダイレクト
-        header('/form.php');
+        header('Location: /form.php');
         exit();
         } else {
             //エラーメッセージ
             $_SESSION['error_msg'] = "メールアドレスまたはパスワードが正しくありません。";
-            header('/login.php');
+            header('Location: /login.php');
             exit();
         }     
     }      
