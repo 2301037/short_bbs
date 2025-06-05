@@ -1,6 +1,10 @@
 <?php
 session_start();
-
+$pdo = new PDO('mysql:host=mysql321.phy.lolipop.lan;
+                    dbname=LAA1553845-team1kadai1;charset=utf8',
+                    'LAA1553845',
+                    'Banana1234');
+ 
 // ✅ ログアウト処理（URLに ?logout=1 がある場合）
 if (isset($_GET['logout'])) {
     $_SESSION = [];
