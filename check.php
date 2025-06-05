@@ -4,7 +4,6 @@ session_start();
                     dbname=LAA1553845-team1kadai1;charset=utf8',
                     'LAA1553845',
                     'Banana1234');
- 
 
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
