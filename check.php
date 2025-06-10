@@ -8,8 +8,8 @@ session_start();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //データ取得
-        $name = $_POST['username'];
-        $pass = $_POST['password'];
+        $name = $_POST[''];
+        $pass = $_POST[''];
 
         //データベースから値を取得
         $stmt = $pdo->prepare("SELECT * FROM user WHERE username = :username");
