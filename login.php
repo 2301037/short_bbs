@@ -5,7 +5,7 @@ $pdo = new PDO('mysql:host=mysql321.phy.lolipop.lan;
                     'LAA1553845',
                     'Banana1234');
 if (!empty($_SESSION['error_msg'])) {
-    echo '<p style="color:red;">' . htmlspecialchars($_SESSION['error_message'], ENT_QUOTES, 'UTF-8') . '</p>';
+    echo '<p style="color:red;">' . htmlspecialchars($_SESSION['error_msg'], ENT_QUOTES, 'UTF-8') . '</p>';
     unset($_SESSION['error_msg']); // 表示後に削除する場合
 } 
 
