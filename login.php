@@ -4,8 +4,13 @@ $pdo = new PDO('mysql:host=mysql321.phy.lolipop.lan;
                     dbname=LAA1553845-team1kadai1;charset=utf8',
                     'LAA1553845',
                     'Banana1234');
- 
-if (isset($_SESSION['user_name'])) {
+if (!empty($_SESSION['error_msg'])) {
+    echo '<p style="color:red;">' . htmlspecialchars($_SESSION['error_message'], ENT_QUOTES, 'UTF-8') . '</p>';
+    unset($_SESSION['error_msg']); // 表示後に削除する場合
+} 
+
+
+ if (isset($_SESSION['user_name'])) {
     header('Location: form.php');
     exit;
 }
