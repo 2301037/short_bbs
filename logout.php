@@ -1,4 +1,5 @@
 <?php
+session_start();
 // （ログアウト処理部分はそのまま）
 
 if (isset($_GET['logout'])) {
