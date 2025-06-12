@@ -1,3 +1,7 @@
+<?php
+session_start();
+$userid = $SESSION['user_id'];
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -16,7 +20,6 @@
     <!-- ↓ PHP SQL CREATED ↓ -->
     <?php
     if($_SERVER["REQUEST_METHOD"] === "POST"){
-        $name = $_POST['name'] ?? '';
         $comment = $_POST['comment'] ?? '';
  
         $pdo = new PDO('mysql:host=mysql321.phy.lolipop.lan;
@@ -25,18 +28,14 @@
                     'Banana1234');
     try {
     $pdo->beginTransaction();
-
-    $sql1 = "INSERT INTO user(username) VALUES (:name)";
-    $stmt1 = $pdo->prepare($sql1);
-    $stmt1->bindParam(':name', $name);
-    $stmt1->execute();
-
-    $sql2 = "INSERT INTO comment(content) VALUES (:comment)";
+    $sql2 = "INSERT INTO comment(user_id , content) VALUES (:add_id , :comment)";
     $stmt2 = $pdo->prepare($sql2);
+    $stmt2->bindParam(':add_id', $userid);
     $stmt2->bindParam(':comment', $comment);
     $stmt2->execute();
 
     $pdo->commit();
+    echo "投稿を追加しました！";
 } catch (PDOException $e) {
     $pdo->rollBack();
     echo "エラーが発生しました: " . $e->getMessage();
