@@ -19,6 +19,7 @@ session_start();
 
         //入力した情報とデータベースの情報が一致するか
         if ($user && password_verify($pass,$user['password'])) {
+            $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['user_pass'] = $user['password'];
             $_SESSION['user_name'] = $user['username'];
 
