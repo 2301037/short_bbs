@@ -29,5 +29,6 @@ if (!empty($_SESSION['error_msg'])) {
         <p>パスワード：<input type="password" name="password" required></p>
         <p><button type="submit">ログイン</button></p>
     </form>
+    <p><a href="login.php">新規登録はこちら</a></p>
 </body>
 </html>
