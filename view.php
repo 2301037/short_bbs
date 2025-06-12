@@ -1,6 +1,6 @@
 <?php
 session_start();
-$userid = $SESSION['user_id'];
+$userid = $_SESSION['user_id'];
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -19,9 +19,22 @@ $userid = $SESSION['user_id'];
                     'LAA1553845',
                     'Banana1234');
 
-    $sql = "SELECT user.usrname , comment.content
-            FROM commnet Join user ON comment.user_id = user.id
+    $sql = "SELECT user.username , comment.created_at , comment.content
+            FROM comment Join user ON comment.user_id = user.id
             ORDER BY comment.id ASC ";
+    $stmt = $pdo -> prepare($sql);
+    $stmt -> execute();
+    /* 表示処理*/
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $username = htmlspecialchars($row['username'], ENT_QUOTES, 'UTF-8');
+        $content = nl2br(htmlspecialchars($row['content'], ENT_QUOTES, 'UTF-8'));
+        $created_at = htmlspecialchars($row['created_at'], ENT_QUOTES, 'UTF-8');
+
+        echo "<div class='post-box'>";
+        echo "<p><strong>{$username}</strong> さん（{$created_at}）</p>";
+        echo "<p>{$content}</p>";
+        echo "</div><hr>";
+    }
     ?>
 </body>
 </html>
