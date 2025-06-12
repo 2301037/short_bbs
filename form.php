@@ -16,7 +16,7 @@
     <!-- ↓ PHP SQL CREATED ↓ -->
     <?php
     if($_SERVER["REQUEST_METHOD"] === "POST"){
-        $name = $_POST['name'] ?? '';
+        $name = $_POST['name'] ?? '名無し';
         $comment = $_POST['comment'] ?? '';
  
         $pdo = new PDO('mysql:host=mysql321.phy.lolipop.lan;
