@@ -16,18 +16,31 @@
     <!-- ↓ PHP SQL CREATED ↓ -->
     <?php
     if($_SERVER["REQUEST_METHOD"] === "POST"){
-        $name = $_POST['name'] ?? '名無し';
+        $name = $_POST['name'] ?? '';
         $comment = $_POST['comment'] ?? '';
  
         $pdo = new PDO('mysql:host=mysql321.phy.lolipop.lan;
                     dbname=LAA1553845-team1kadai1;charset=utf8',
                     'LAA1553845',
                     'Banana1234');
-    $sql = "INSERT INTO comment (name , comment) VALUES (:name,:comment)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':comment', $comment);
-    $stmt->execute();
+    try {
+    $pdo->beginTransaction();
+
+    $sql1 = "INSERT INTO user(username) VALUES (:name)";
+    $stmt1 = $pdo->prepare($sql1);
+    $stmt1->bindParam(':name', $name);
+    $stmt1->execute();
+
+    $sql2 = "INSERT INTO comment(content) VALUES (:comment)";
+    $stmt2 = $pdo->prepare($sql2);
+    $stmt2->bindParam(':comment', $comment);
+    $stmt2->execute();
+
+    $pdo->commit();
+} catch (PDOException $e) {
+    $pdo->rollBack();
+    echo "エラーが発生しました: " . $e->getMessage();
+}
     }
    
                     ?>
