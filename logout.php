@@ -1,11 +1,6 @@
 <?php
-session_start();
-$pdo = new PDO('mysql:host=mysql321.phy.lolipop.lan;
-                    dbname=LAA1553845-team1kadai1;charset=utf8',
-                    'LAA1553845',
-                    'Banana1234');
- 
-// ✅ ログアウト処理（URLに ?logout=1 がある場合）
+// （ログアウト処理部分はそのまま）
+
 if (isset($_GET['logout'])) {
     $_SESSION = [];
     if (ini_get("session.use_cookies")) {
@@ -16,27 +11,48 @@ if (isset($_GET['logout'])) {
         );
     }
     session_destroy();
-    header('Location: login.php'); // ログアウト後の遷移先
-    exit;
-}
+?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ログアウト完了</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;  /* 水平方向中央 */
+            align-items: center;      /* 垂直方向中央 */
+            height: 100vh;            /* 画面全体の高さ */
+            margin: 0;
+        }
+        .message-box {
+            background-color: #e0f7fa;
+            border: 2px solid #00796b;
+            color: #004d40;
+            padding: 30px 40px;
+            border-radius: 10px;
+            font-size: 1.3em;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="message-box">
+        <p>ログアウトしました。<br>5秒後にログインページへ移動します。</p>
+    </div>
 
-//  ログインチェック（未ログインならログインページへ）
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit;
-}
-
-//  ここに管理者専用処理を追加してもOK
-// 例: 管理者かどうかを確認（必要な場合）
-if (isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
-    echo "このページにはアクセスできません。";
+    <script>
+        setTimeout(function() {
+            window.location.href = "login.php";
+        }, 5000);
+    </script>
+</body>
+</html>
+<?php
     exit;
 }
 ?>
-
-
-<p><a href="?logout=1">ログアウト</a></p>
-
-
-
-
