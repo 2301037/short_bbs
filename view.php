@@ -1,3 +1,7 @@
+<?php
+session_start();
+$userid = $SESSION['user_id'];
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -10,19 +14,14 @@
     <p><a href="form.php">← 投稿フォームへ戻る</a></p>
     <hr>
     <?php
-    $filename = 'comments.txt';
-    if (file_exists($filename)) {
-        $lines = file($filename, FILE_IGNORE_NEW_LINES);
-        foreach (array_reverse($lines) as $line) {
-            [$time, $name, $comment] = explode("\t", $line);
-            echo "<div class='post'>";
-            echo "<p><strong>$name</strong> さん ($time)</p>";
-            echo "<p>" . nl2br($comment) . "</p>";
-            echo "</div><hr>";
-        }
-    } else {
-        echo "<p>まだ投稿がありません。</p>";
-    }
+    $pdo = new PDO('mysql:host=mysql321.phy.lolipop.lan;
+                    dbname=LAA1553845-team1kadai1;charset=utf8',
+                    'LAA1553845',
+                    'Banana1234');
+
+    $sql = "SELECT user.usrname , comment.content
+            FROM commnet Join user ON comment.user_id = user.id
+            ORDER BY comment.id ASC ";
     ?>
 </body>
 </html>
