@@ -18,38 +18,46 @@ if (isset($_GET['logout'])) {
     <meta charset="UTF-8">
     <title>ログアウト完了</title>
     <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;  /* 水平方向中央 */
-            align-items: center;      /* 垂直方向中央 */
-            height: 100vh;            /* 画面全体の高さ */
-            margin: 0;
-        }
-        .message-box {
-            background-color: #e0f7fa;
-            border: 2px solid #00796b;
-            color: #004d40;
-            padding: 30px 40px;
-            border-radius: 10px;
-            font-size: 1.3em;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 400px;
-        }
-    </style>
+  .message-box {
+    background-color: #e0f7fa;
+    border: 2px solid #00796b;
+    color: #004d40;
+    padding: 30px 40px;
+    border-radius: 10px;
+    font-size: 1.3em;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 400px;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+</style>
 </head>
 <body>
-    <div class="message-box">
-        <p>ログアウトしました。<br>5秒後にログインページへ移動します。</p>
-    </div>
+<div class="message-box">
+  <p>ログアウトしました。<br>5秒後にログインページへ移動します。</p>
+  <p id="countdown">5</p>
+</div>
 
-    <script>
-        setTimeout(function() {
-            window.location.href = "login.php";
-        }, 5000);
-    </script>
+<script>
+  let countdownNum = 5;
+  const countdownEl = document.getElementById('countdown');
+
+  const interval = setInterval(() => {
+    countdownNum--;
+    if (countdownNum <= 0) {
+      clearInterval(interval);
+      window.location.href = "login.php";
+    } else {
+      countdownEl.textContent = countdownNum;
+    }
+  }, 1000);
+</script>
+
 </body>
 </html>
 <?php
