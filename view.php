@@ -1,3 +1,7 @@
+<?php
+session_start();
+$userid = $_SESSION['user_id'];
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -10,18 +14,26 @@
     <p><a href="form.php">← 投稿フォームへ戻る</a></p>
     <hr>
     <?php
-    $filename = 'comments.txt';
-    if (file_exists($filename)) {
-        $lines = file($filename, FILE_IGNORE_NEW_LINES);
-        foreach (array_reverse($lines) as $line) {
-            [$time, $name, $comment] = explode("\t", $line);
-            echo "<div class='post'>";
-            echo "<p><strong>$name</strong> さん ($time)</p>";
-            echo "<p>" . nl2br($comment) . "</p>";
-            echo "</div><hr>";
-        }
-    } else {
-        echo "<p>まだ投稿がありません。</p>";
+    $pdo = new PDO('mysql:host=mysql321.phy.lolipop.lan;
+                    dbname=LAA1553845-team1kadai1;charset=utf8',
+                    'LAA1553845',
+                    'Banana1234');
+
+    $sql = "SELECT user.username , comment.created_at , comment.content
+            FROM comment Join user ON comment.user_id = user.id
+            ORDER BY comment.id ASC ";
+    $stmt = $pdo -> prepare($sql);
+    $stmt -> execute();
+    /* 表示処理*/
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $username = htmlspecialchars($row['username'], ENT_QUOTES, 'UTF-8');
+        $content = nl2br(htmlspecialchars($row['content'], ENT_QUOTES, 'UTF-8'));
+        $created_at = htmlspecialchars($row['created_at'], ENT_QUOTES, 'UTF-8');
+
+        echo "<div class='post-box'>";
+        echo "<p><strong>{$username}</strong> さん（{$created_at}）</p>";
+        echo "<p>{$content}</p>";
+        echo "</div><hr>";
     }
     ?>
 </body>
